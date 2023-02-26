@@ -9,7 +9,7 @@ function Card({_id, card, link, name, likes, onClick}) {
   return (
     <article className="elements__item" key={_id} onClick = {handleClick}>
       <button type="button" className="elements__trash"></button>
-      <img className="elements__image" alt="" src={`${link}`} />
+      <img className="elements__image" alt={name} src={`${link}`} />
       <div className="elements__group">
         <p className="elements__title">{name}</p>
           <div className="elements__group_liked">

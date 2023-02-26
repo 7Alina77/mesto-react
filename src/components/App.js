@@ -53,13 +53,13 @@ function App() {
       isOpen = {isEditProfilePopupOpen} 
       name = 'edit'  
       title = 'Редактировать профиль'
+      buttonText = 'Сохранить'
       children = {
         <>
           <input id="name-input" required type="text" name="title" className="popup__input popup__input_type_name" placeholder="Имя" minLength="2" maxLength="40" />
           <p className="popup__input-error name-input-error"></p>
           <input id="about-input" required type="text" name="about" className="popup__input popup__input_type_about" placeholder="О себе" minLength="2" maxLength="200" />
           <p className="popup__input-error about-input-error"></p>
-          <button className="popup__save" type="submit">Сохранить</button>
         </>
       }
     />
@@ -68,11 +68,11 @@ function App() {
       isOpen = {isEditAvatarPopupOpen} 
       name = 'avatar'  
       title = 'Обновить аватар' 
+      buttonText = 'Сохранить'
       children = {
         <>
           <input id="avatar-input" required type="url" name="avatar" className="popup__input popup__input_type_avatar" placeholder="Ссылка на картинку" />
           <p className="popup__input-error avatar-input-error"></p>
-          <button className="popup__save popup__add" type="submit">Сохранить</button>
         </>
       }
     />
@@ -81,13 +81,13 @@ function App() {
       isOpen = {isAddPlacePopupOpen}
       name = 'add-element'
       title = 'Новое место'
+      buttonText = 'Создать'
       children = {
         <>
           <input id="place-input" required type="text" name="name" className="popup__input popup__input_type_place" placeholder="Название" minLength="2" maxLength="30" />
           <p className="popup__input-error place-input-error"></p>
           <input id="link-input" required type="url" name="link" className="popup__input popup__input_type_link" placeholder="Ссылка на картинку" />
           <p className="popup__input-error link-input-error"></p>
-          <button className="popup__save popup__add" type="submit">Создать</button>
         </>
       }
     />
