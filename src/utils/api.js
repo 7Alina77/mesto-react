@@ -30,7 +30,7 @@ class Api {
     .then(this._checkResponse)
   }
 
-  patchProfile(name, about) {
+  patchProfile({name, about}) {
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
@@ -78,7 +78,15 @@ class Api {
     .then(this._checkResponse)
   }
 
-  patchAvatar(avatar) {
+  changeLikeCardStatus(id, isLiked) {
+    return fetch(`${this._url}/cards/${id}/likes`, {
+      method: isLiked? 'PUT' : 'DELETE',
+      headers: this._headers,
+    })
+    .then(this._checkResponse)
+  }
+
+  patchAvatar({avatar}) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
