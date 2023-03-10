@@ -4,9 +4,9 @@ import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import ImagePopup from './ImagePopup';
-import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
 function App() {
@@ -39,7 +39,14 @@ function App() {
       .catch((err) => {
         console.log(`Ошибка лайка: ${err}`)
       });
-}
+  }
+
+  function handleCardDelete(card) {
+    api.handleDeleteCard(card._id)
+      .then(() => {
+        setCards((state) => state.filter((c) => c._id !== card._id));
+      })
+  }
  
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -80,6 +87,17 @@ function App() {
       });
   }
 
+  function handleAddPlace (placeData) {
+    api.postNewCard(placeData)
+      .then((newCard) => {
+        setCards([newCard, ...cards])
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(`Ошибка добавления карточки: ${err}`)
+      });
+  }
+
   function closeAllPopups() {
     setIsAddPlacePopupOpen(false);
     setIsEditProfilePopupOpen(false);
@@ -98,6 +116,7 @@ function App() {
         onAddPlace={handleAddPlaceClick}
         onCardClick={handleCardClick}
         handleLikeClick ={handleCardLike}
+        handleDeleteClick = {handleCardDelete}
       />
       <ImagePopup
         card = {selectedCard}
@@ -114,20 +133,10 @@ function App() {
         onClose={closeAllPopups} 
         onUpdateAvatar = {handleUpdateAvatar}
       />
-      <PopupWithForm 
-        onClose={closeAllPopups}
-        isOpen = {isAddPlacePopupOpen}
-        name = 'add-element'
-        title = 'Новое место'
-        buttonText = 'Создать'
-        children = {
-          <>
-            <input id="place-input" required type="text" name="name" className="popup__input popup__input_type_place" placeholder="Название" minLength="2" maxLength="30" />
-            <p className="popup__input-error place-input-error"></p>
-            <input id="link-input" required type="url" name="link" className="popup__input popup__input_type_link" placeholder="Ссылка на картинку" />
-            <p className="popup__input-error link-input-error"></p>
-          </>
-        }
+      <AddPlacePopup 
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups} 
+        onAddPlace = {handleAddPlace}
       />
       <section className="popup popup_confirmation">
         <div className="popup__container">

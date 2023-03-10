@@ -28,6 +28,7 @@ function Main(props) {
             likes = {card.likes}
             onClick={props.onCardClick}
             onCardLike={props.handleLikeClick}
+            onCardDelete = {props.handleDeleteClick}
             />
         ))}
       </section>

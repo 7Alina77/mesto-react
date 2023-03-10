@@ -1,7 +1,7 @@
 import React from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Card({_id, card, link, name, likes, onClick, onCardLike}) {
+function Card({_id, card, link, name, likes, onClick, onCardLike, onCardDelete}) {
   const currentUser = React.useContext(CurrentUserContext);
   // Определяем, являемся ли мы владельцем текущей карточки
   const isOwn = card.owner._id === currentUser._id;
@@ -20,9 +20,13 @@ function Card({_id, card, link, name, likes, onClick, onCardLike}) {
     onCardLike(card)
   }
 
+  function handleDeleteClick() {
+    onCardDelete(card)
+  }
+
   return (
     <article className="elements__item" key={_id}>
-      {isOwn && <button type="button" className='elements__trash' /**onClick={handleDeleteClick}*/ />}
+      {isOwn && <button type="button" className='elements__trash' onClick={handleDeleteClick} />}
       <img className="elements__image" alt={name} src={`${link}`} onClick = {handleClick}/>
       <div className="elements__group">
         <p className="elements__title">{name}</p>
