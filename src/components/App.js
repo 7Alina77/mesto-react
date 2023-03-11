@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import {api} from '../utils/api';
 import Header from './Header';
 import Main from './Main';
@@ -10,14 +11,14 @@ import AddPlacePopup from './AddPlacePopup';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
 function App() {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen]= React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen]= React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen]= React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(null);
-  const [currentUser, setCurrentUser] = React.useState();
-  const [cards, setCards] = React.useState([]);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen]= useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen]= useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen]= useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [cards, setCards] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     Promise.all([api.handleGetUserInfo(), api.getInitialCards()])
       .then(([userData, cardsData]) => {
         setCurrentUser(userData);
@@ -46,6 +47,9 @@ function App() {
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== card._id));
       })
+      .catch((err) => {
+        console.log(`Ошибка удаления карточки: ${err}`)
+      });
   }
  
   function handleEditAvatarClick() {
@@ -138,15 +142,6 @@ function App() {
         onClose={closeAllPopups} 
         onAddPlace = {handleAddPlace}
       />
-      <section className="popup popup_confirmation">
-        <div className="popup__container">
-          <h2 className="popup__title">Вы уверены?</h2>
-          <form name="popup" className="popup__form popup__confirmation" noValidate>
-            <button className="popup__save popup__add" type="submit">Да</button>
-          </form>
-          <button className="popup__close" type="button"></button>
-        </div>
-      </section>
     </div> 
   </CurrentUserContext.Provider>
   );
